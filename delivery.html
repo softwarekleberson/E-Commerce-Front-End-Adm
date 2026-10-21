@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/list-orders/style.css">
+	<title>Delivered Orders</title>
+</head>
+
+<body>
+	<div class="container">
+		<h1>Delivered Orders</h1>
+
+		<table id="delivered-orders-table">
+			<thead>
+				<tr>
+					<th>Order Code</th>
+					<th>Customer ID</th>
+					<th>Items</th>
+					<th>Status</th>
+					<th>Total</th>
+					<th>Currency</th>
+				</tr>
+			</thead>
+			<tbody id="delivered-orders-body">
+				<tr><td colspan="6">Loading orders...</td></tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="footer" id="total-delivered-orders">
+		<p>Orders delivered: 0</p>
+	</div>
+
+	<script src="order/delivered.js"></script>
+</body>
+
+</html>

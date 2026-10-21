@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/list-customer/style.css">
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col items-center py-8">
+
+    <div class="dashboard-container w-full max-w-6xl bg-white rounded-lg shadow p-6">
+        <!-- Header -->
+        <div class="header mb-6">
+            <h1 class="text-3xl font-bold mb-1">Customer Dashboard</h1>
+            <p class="text-3xl">Manage and view your customer list</p>
+        </div>
+
+        <!-- Search & Filters -->
+        <div class="search-bar flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4">
+            <input type="text" id="search" placeholder="Search by name, email, or phone..."
+                class="search-input border rounded px-4 py-2 w-full md:w-1/2">
+            <div class="flex gap-2 flex-wrap">
+                <button id="filter-active"
+                    class="filter-btn bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Show Active
+                    Only</button>
+                <button id="filter-inactive"
+                    class="filter-btn bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Show Inactive
+                    Only</button>
+                <button id="filter-all"
+                    class="filter-btn bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Show All</button>
+                <button
+                    class="filter-btn bg-yellow-500 text-white px-4 py-2 rounded hover:bg-gray-600"><a href="status-customer.html" target="_blank" rel="noopener noreferrer">change customer</a></button>
+            </div>
+        </div>
+
+        <!-- Customer Table -->
+        <div class="table-container overflow-x-auto">
+            <table id="customer-table" class="min-w-full border border-gray-300 rounded-lg">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="px-4 py-2 border-b">ID</th>
+                        <th class="px-4 py-2 border-b">Active</th>
+                        <th class="px-4 py-2 border-b">Birth Date</th>
+                        <th class="px-4 py-2 border-b">Name</th>
+                        <th class="px-4 py-2 border-b">Gender</th>
+                        <th class="px-4 py-2 border-b">Email</th>
+                        <th class="px-4 py-2 border-b">Phone</th>
+                    </tr>
+                </thead>
+                <tbody id="customers-table-body">
+                    <!-- Rows will be inserted dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="list-customer/index.js"></script>
+</body>
+
+</html>

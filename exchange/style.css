@@ -1,0 +1,130 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+}
+
+th {
+    background-color: #007BFF;
+    color: white;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+td {
+    color: #555;
+}
+
+/* ========================================
+   ESTILOS DOS BOTÕES DE AÇÃO (.btn-accept / .btn-negate)
+   ======================================== */
+.btn-accept, .btn-negate {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-right: 6px;
+}
+
+/* Botão Aceitar (Verde) */
+.btn-accept {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-accept:hover {
+    background-color: #218838;
+}
+
+/* Botão Recusar (Vermelho) */
+.btn-negate {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-negate:hover {
+    background-color: #c82333;
+}
+
+/* Efeito de clique em ambos os botões */
+.btn-accept:active, .btn-negate:active {
+    transform: scale(0.96);
+}
+
+/* ========================================
+   ESTILOS DAS BADGES DE STATUS
+   ======================================== */
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.status-OPEN {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-ACCEPTED {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-NEGATED, .status-REJECTED {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Links genéricos */
+a {
+    text-decoration: none;  
+    color: #3498db;  
+    font-family: Arial, sans-serif;  
+    font-size: 16px;  
+    padding: 8px 12px;  
+    border: 1px solid #3498db;  
+    border-radius: 4px;  
+    transition: background-color 0.3s ease;  
+}
+
+a:hover {
+    background-color: #3498db;  
+    color: white;  
+}
+

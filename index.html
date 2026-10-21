@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="imagem/fiveicon.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="index/style.css">
+    <title>Admin Home</title>
+    <script>
+        if (!localStorage.getItem("token")) {
+            window.location.href = "login.html";
+        }
+    </script>
+</head>
+
+<body>
+    <main>
+        <section class="container">
+
+            <div>
+                <a href="new-adm.html">
+                    <h3>Create new Adm</h3>
+                    <p>New Adm</p>
+                </a>
+            </div>
+
+            <div>
+                <a href="login.html">
+                    <h3>Login</h3>
+                    <p>Admin login</p>
+                </a>
+            </div>
+
+            <div>
+                <a href="insert-product.html">
+                    <h3>Add Product</h3>
+                    <p>Register new Products</p>
+                </a>
+            </div>
+
+            <div>
+                <a href="update-product.html">
+                    <h3>Update Product</h3>
+                    <p>Update existing product</p>
+                </a>
+            </div>
+
+            <div>
+                <a href="stock.html">
+                    <h3>Manage Stock</h3>
+                    <p>Manage Stock Product</p>
+                </a>
+            </div>
+
+            <div>
+                <a href="deactivate-product.html">
+                    <h3>Deactivate Product</h3>
+                    <p>Deactivate a product, remove from catalog</p>
+                </a>
+            </div>
+
+            <div>
+                <a href="activet-product.html">
+                    <h3>Activate Product</h3>
+                    <p>Activate a product, return to catalog</p>
+                </a>
+            </div>
+
+            <div>
+                <a href="modify-selling-price.html">
+                    <h3>Modify Price Product</h3>
+                    <p>This price change does not respect the pricing policy.</p>
+                </a>
+            </div>
+
+            <div>
+                <a href="exchange.html">
+                    <h3>Exchange Requests</h3>
+                    <p>View your exchange requests</p>
+                </a>
+            </div>
+
+            <div>
+                <a href="delete-orders.html">
+                    <h3>Delete Orders</h3>
+                    <p>Delete unpaid orders from the cart</p>
+                </a>
+            </div>
+
+            <div>
+                <a href="list-orders.html">
+                    <h3>List Orders</h3>
+                    <p>List all orders</p>
+                </a>
+            </div>
+
+            <div>
+                <a href="list-customer.html">
+                    <h3>List All Customer</h3>
+                    <p>Customer activet</p>
+                </a>
+            </div>
+
+            <div>
+                <a href="dashboard.html">
+                    <h3>Dashboard</h3>
+                    <p>Dashboard all orders</p>
+                </a>
+            </div>
+
+        </section>
+    </main>
+</body>
+
+</html>

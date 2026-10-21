@@ -1,0 +1,7 @@
+## roda o teste de inseção de itens no estoque
+## transita pedido de separação para transporte
+## transita pedido de transporte pra entregue
+npx playwright test --headed
+
+## aceita troca vinda de pedido de troca
+npx playwright test tests/exchange/accept.spec.js --headed

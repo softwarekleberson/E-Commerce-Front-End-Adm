@@ -1,0 +1,63 @@
+#orders-sections .transit-item-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    width: 132px;
+    height: 30px;
+    margin: 10px 0 0;
+    padding: 0 10px;
+    border: 1px solid #0f766e;
+    border-radius: 999px;
+    background: #0f766e;
+    box-shadow: 0 4px 0 #115e59, 0 8px 18px rgba(15, 118, 110, 0.2);
+    color: #fff;
+    cursor: pointer;
+    font: 700 12px/1 Arial, sans-serif;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+#orders-sections .transit-item-button::before {
+    content: ">";
+    display: inline-grid;
+    width: 20px;
+    height: 20px;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    font-size: 16px;
+    line-height: 1;
+}
+
+#orders-sections .transit-item-button:hover {
+    background: #0d9488;
+    box-shadow: 0 4px 0 #0f766e, 0 10px 22px rgba(15, 118, 110, 0.28);
+    transform: translateY(-2px);
+}
+
+#orders-sections .transit-item-button:active {
+    box-shadow: 0 1px 0 #115e59, 0 4px 10px rgba(15, 118, 110, 0.18);
+    transform: translateY(2px);
+}
+
+#orders-sections .transit-item-button:focus-visible {
+    outline: 3px solid #f59e0b;
+    outline-offset: 3px;
+}
+
+#orders-sections .transit-item-button:disabled {
+    background: #64748b;
+    border-color: #64748b;
+    box-shadow: 0 4px 0 #475569;
+    cursor: wait;
+    opacity: 0.8;
+    transform: none;
+}
+
+@media (max-width: 600px) {
+    #orders-sections .transit-item-button {
+        width: 132px;
+    }
+}

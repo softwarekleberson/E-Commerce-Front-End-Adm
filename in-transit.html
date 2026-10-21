@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/list-orders/style.css">
+	<title>Orders in Transit</title>
+</head>
+
+<body>
+	<div class="container">
+		<h1>Orders in Transit</h1>
+
+		<table id="transit-orders-table">
+			<thead>
+				<tr>
+					<th>Order Code</th>
+					<th>Customer ID</th>
+					<th>Items</th>
+					<th>Status</th>
+					<th>Total</th>
+					<th>Currency</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody id="transit-orders-body">
+				<tr><td colspan="7">Loading orders...</td></tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="footer" id="total-transit-orders">
+		<p>Orders in transit: 0</p>
+	</div>
+
+	<script src="order/in-transit.js"></script>
+</body>
+
+</html>

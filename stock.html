@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Registration</title>
+    <link rel="stylesheet" href="css-global/form.css">
+</head>
+
+<body>
+
+    <form id="stockForm">
+
+        <fieldset>
+
+            <legend>
+                Inventory Registration
+            </legend>
+
+            <div class="form-group">
+                <label for="productId">Product ID</label>
+                <input type="text" id="productId" name="productId" required>
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" name="quantity" min="0" required>
+            </div>
+
+            <div class="form-group">
+                <label for="productQuality">Product Quality</label>
+                <select id="productQuality" name="productQuality" required>
+                    <option value="">Select Quality</option>
+                    <option value="NEW">NEW</option>
+                    <option value="USED">USED</option>
+                    <option value="DAMAGED">DAMAGED</option>
+                    <option value="RETURNED">RETURNED</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="purchasePrice">Purchase Price</label>
+                <input type="number" id="purchasePrice" name="purchasePrice" min="0" step="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <label for="coin">Currency</label>
+                <select id="coin" name="coin" required>
+                    <option value="">Select Currency</option>
+                    <option value="DOLAR">DOLAR</option>
+                    <option value="REAL">REAL</option>
+                    <option value="EURO">EURO</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="supplier">Supplier</label>
+                <input type="text" id="supplier" name="supplier" required>
+            </div>
+
+            <button type="submit">Submit</button>
+
+        </fieldset>
+    </form>
+
+    <script src="stock/index.js"></script>
+
+</body>
+
+</html>

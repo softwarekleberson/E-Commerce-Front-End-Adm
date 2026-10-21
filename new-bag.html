@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Registration Bag</title>
+    <link rel="stylesheet" href="css-global/form.css">
+</head>
+
+<body>
+
+    <form id="productForm">
+        <fieldset>
+            <legend>Bag Registration</legend>
+
+            <!-- Tipo fixo do produto -->
+            <input type="hidden" name="product_type" value="bag">
+
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="3" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="typeCoin">Currency Type:</label>
+                <select id="typeCoin" name="typeCoin">
+                    <option value="DOLAR">Dollar</option>
+                    <option value="REAL">Real</option>
+                    <option value="EURO">Euro</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" name="category">
+                    <option value="BAG">Bag</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="brand">Brand:</label>
+                <input type="text" id="brand" name="brand">
+            </div>
+
+            <div class="form-group">
+                <h3>Medias</h3>
+                <div id="midiasContainer">
+                    <div class="midia-group">
+                        <label>Media URL:</label>
+                        <input type="url" name="midias[0].url" required>
+
+                        <label>Media Description:</label>
+                        <input type="text" name="midias[0].description" required>
+                    </div>
+                </div>
+                <button type="button" id="addMidia">Add another media</button>
+            </div>
+
+            <div class="form-group">
+                <label for="pricing">Sales price percentage </label>
+                <input type="number" id="pricing" name="pricing" min="0" max="1" step="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <label for="color">Color:</label>
+                <input type="text" id="color" name="color" required>
+            </div>
+
+            <div class="form-group">
+                <label for="volume">Volume (L):</label>
+                <input type="number" id="volume" name="volume" min="0" step="0.1" required>
+            </div>
+
+            <button type="submit">Submit</button>
+        </fieldset>
+    </form>
+
+    <pre id="output"></pre>
+
+    <script src="product/bagpost.js"></script>
+</body>
+
+</html>

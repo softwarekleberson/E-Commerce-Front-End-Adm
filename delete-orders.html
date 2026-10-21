@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="imagem/fiveicon.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="/css-global/form.css">
+    <title>Delete Orders</title>
+</head>
+
+<body>
+
+    <form id="form">
+        <fieldset>
+            <legend>Enter the number of days after which unpaid orders will be deleted.</legend>
+
+            <div class="form-group">
+                <label for="dias">Number of days for deletion</label>
+                <input type="number" id="dias" name="dias" min="1" required>
+            </div>
+
+            <button type="submit">Submit</button>
+            <button type="reset">Clear</button>
+        </fieldset>
+    </form>
+
+    <script src="excluir-pedidos-carrinho/js/excluir-pedidos.js"></script>
+
+</body>
+
+</html>
