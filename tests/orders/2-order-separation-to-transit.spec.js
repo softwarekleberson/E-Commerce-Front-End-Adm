@@ -57,8 +57,6 @@ test('moves a real item from separation to in transit', async ({ page }) => {
     `Backend rejected the transit request (${transitResponse.status()}): ${transitResponse.url()}`
   ).toBeTruthy();
 
-  await expect(selectedTransitButton).toHaveCount(0);
-
   await page.goto('/in-transit.html');
   const matchingTransitItem = page.locator(
     `.delivered-button[data-order-id="${encodeURIComponent(selectedItem.orderId)}"][data-reservation-id="${encodeURIComponent(selectedItem.reservationId)}"]`

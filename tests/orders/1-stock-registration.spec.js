@@ -26,38 +26,33 @@ test('admin logs in and submits the requested stock entry', async ({ page }) => 
   const loginPayloads = [];
   const stockRequests = [];
 
-  // Mock the API so this UI test never changes the real inventory.
-  await page.route('http://localhost:8080/auth/login', async (route) => {
-    loginPayloads.push(route.request().postDataJSON());
-    await route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify({ token: 'playwright-test-token' }),
-    });
-  });
-
-  await page.route('http://localhost:8080/adm/stock/input', async (route) => {
-    stockRequests.push({
-      payload: route.request().postDataJSON(),
-      authorization: route.request().headers().authorization,
-    });
-    await route.fulfill({
-      status: 201,
-      contentType: 'application/json',
-      body: JSON.stringify({ id: 'playwright-stock-entry' }),
-    });
-  });
-
   page.on('dialog', (dialog) => dialog.accept());
+  page.on('request', (request) => {
+    if (request.url().endsWith('/auth/login')) {
+      loginPayloads.push(request.postDataJSON());
+    }
+
+    if (request.url().endsWith('/adm/stock/input')) {
+      stockRequests.push({
+        payload: request.postDataJSON(),
+        hasAuthorization: Boolean(request.headers().authorization),
+      });
+    }
+  });
 
   await page.goto('/login.html');
   await page.getByLabel('Email').fill(env.ADMIN_EMAIL);
   await page.getByLabel('Password').fill(env.ADMIN_PASSWORD);
+  const loginResponsePromise = page.waitForResponse((response) =>
+    response.request().method() === 'POST' && response.url().endsWith('/auth/login')
+  );
   await page.getByRole('button', { name: 'Sign In' }).click();
+  const loginResponse = await loginResponsePromise;
+  expect(loginResponse.ok(), `Login failed with HTTP ${loginResponse.status()}`).toBeTruthy();
   await expect(page).toHaveURL(/\/index\.html$/);
   expect(loginPayloads).toEqual([{ email: env.ADMIN_EMAIL, password: env.ADMIN_PASSWORD }]);
   await expect.poll(() => page.evaluate(() => localStorage.getItem('token')))
-    .toBe('playwright-test-token');
+    .toBeTruthy();
 
   await page.goto('/stock.html');
   await page.getByLabel('Product ID').fill('a0e16dd4-2cd8-465d-b79d-094e3510cdf5');
@@ -66,18 +61,25 @@ test('admin logs in and submits the requested stock entry', async ({ page }) => 
   await page.getByLabel('Purchase Price').fill('15');
   await page.getByLabel('Currency').selectOption('DOLAR');
   await page.getByLabel('Supplier').fill('Tec Lider');
+  const stockResponsePromise = page.waitForResponse((response) =>
+    response.request().method() === 'POST' && response.url().endsWith('/adm/stock/input')
+  );
   await page.getByRole('button', { name: 'Submit' }).click();
+  const stockResponse = await stockResponsePromise;
+  expect(
+    stockResponse.ok(),
+    `Stock registration failed with HTTP ${stockResponse.status()}`
+  ).toBeTruthy();
 
   await expect(page).toHaveURL(/\/index\.html$/);
-  expect(stockRequests).toEqual([{
-    payload: {
-      productId: 'a0e16dd4-2cd8-465d-b79d-094e3510cdf5',
-      quantity: 100,
-      productQuality: 'NEW',
-      purchasePrice: 15,
-      coin: 'DOLAR',
-      supplier: 'Tec Lider',
-    },
-    authorization: 'Bearer playwright-test-token',
-  }]);
+  expect(stockRequests).toHaveLength(1);
+  expect(stockRequests[0].payload).toEqual({
+    productId: 'a0e16dd4-2cd8-465d-b79d-094e3510cdf5',
+    quantity: 100,
+    productQuality: 'NEW',
+    purchasePrice: 15,
+    coin: 'DOLAR',
+    supplier: 'Tec Lider',
+  });
+  expect(stockRequests[0].hasAuthorization).toBe(true);
 });
