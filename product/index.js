@@ -51,6 +51,7 @@ document.getElementById('productForm').addEventListener('submit', async (e) => {
     });
 
     if (data.pricing) data.pricing = parseFloat(data.pricing);
+    if (data.numberOfPieces) data.numberOfPieces = parseInt(data.numberOfPieces, 10);
     if (data.page) data.page = parseInt(data.page, 10);
     if (data.height) data.height = parseFloat(data.height);
     if (data.width) data.width = parseFloat(data.width);

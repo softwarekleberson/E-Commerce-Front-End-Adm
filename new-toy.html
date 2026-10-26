@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css-global/form.css">
+    <title>Product Registration Toy</title>
+</head>
+<body>
+    <form id="productForm">
+        <fieldset>
+            <legend>Toy Registration</legend>
+            <input type="hidden" name="product_type" value="toy">
+
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="typeCoin">Currency Type</label>
+                <select id="typeCoin" name="typeCoin" required>
+                    <option value="DOLAR">Dollar</option>
+                    <option value="REAL">Real</option>
+                    <option value="EURO">Euro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" name="category" required>
+                    <option value="TOYS">Toys</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="brand">Brand</label>
+                <input type="text" id="brand" name="brand" required>
+            </div>
+            <div class="form-group">
+                <div id="mediaContainer">
+                    <div class="media-group">
+                        <label>Media URL</label>
+                        <input type="url" name="midias[0].url" required>
+                        <label>Media Description</label>
+                        <input type="text" name="midias[0].description" required>
+                    </div>
+                </div>
+                <button type="button" id="addMedia">Add another media</button>
+            </div>
+            <div class="form-group">
+                <label for="pricing">Sales price percentage</label>
+                <input type="number" id="pricing" name="pricing" min="0" max="1" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="toyType">Toy Type</label>
+                <select id="toyType" name="toyType" required>
+                    <option value="DOLL">Doll</option>
+                    <option value="ACTION_FIGURE">Action figure</option>
+                    <option value="PLUSH_TOY">Plush toy</option>
+                    <option value="VEHICLE">Vehicle</option>
+                    <option value="BUILDING_BLOCKS">Building blocks</option>
+                    <option value="PUZZLE">Puzzle</option>
+                    <option value="BOARD_GAME">Board game</option>
+                    <option value="CARD_GAME">Card game</option>
+                    <option value="EDUCATIONAL">Educational</option>
+                    <option value="MUSICAL">Musical</option>
+                    <option value="OUTDOOR">Outdoor</option>
+                    <option value="SPORTS">Sports</option>
+                    <option value="REMOTE_CONTROL">Remote control</option>
+                    <option value="ELECTRONIC">Electronic</option>
+                    <option value="ROLE_PLAYING">Role playing</option>
+                    <option value="CONSTRUCTION">Construction</option>
+                    <option value="SCIENTIFIC">Scientific</option>
+                    <option value="COLLECTIBLE">Collectible</option>
+                    <option value="CREATIVE">Creative</option>
+                    <option value="BATH_TOY">Bath toy</option>
+                    <option value="OTHER">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="ageRange">Age Range</label>
+                <select id="ageRange" name="ageRange" required>
+                    <option value="ZERO_TO_TWO">0 to 2</option>
+                    <option value="THREE_TO_FIVE">3 to 5</option>
+                    <option value="SIX_TO_EIGHT">6 to 8</option>
+                    <option value="NINE_TO_TWELVE">9 to 12</option>
+                    <option value="THIRTEEN_PLUS">13+</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="material">Material</label>
+                <input type="text" id="material" name="material" required>
+            </div>
+            <div class="form-group">
+                <label for="numberOfPieces">Number of Pieces</label>
+                <input type="number" id="numberOfPieces" name="numberOfPieces" min="1" step="1">
+            </div>
+            <div class="form-group">
+                <label for="batteryRequired">Battery Required</label>
+                <select id="batteryRequired" name="batteryRequired" required>
+                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="batteryIncluded">Battery Included</label>
+                <select id="batteryIncluded" name="batteryIncluded" required>
+                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+                </select>
+            </div>
+            <button type="submit">Submit</button>
+        </fieldset>
+    </form>
+    <script src="product/index.js"></script>
+</body>
+</html>

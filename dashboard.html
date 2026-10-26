@@ -154,7 +154,7 @@
         const apiUrl = 'http://localhost:8080/adm/dashboard/sales';
         const money = value => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         const number = value => Number(value || 0).toLocaleString('pt-BR');
-        const categoryLabels = { livros: 'Livros', livro: 'Livros', books: 'Livros', book: 'Livros', bolsas: 'Bolsas', bolsa: 'Bolsas', bags: 'Bolsas', bag: 'Bolsas', papelaria: 'Papelaria', stationery: 'Papelaria' };
+        const categoryLabels = { livros: 'Livros', livro: 'Livros', books: 'Livros', book: 'Livros', bolsas: 'Bolsas', bolsa: 'Bolsas', bags: 'Bolsas', bag: 'Bolsas', brinquedos: 'Brinquedos', brinquedo: 'Brinquedos', toys: 'Brinquedos', toy: 'Brinquedos', papelaria: 'Papelaria', stationery: 'Papelaria' };
         const monthNames = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
         const categorySelect = document.getElementById('category');
         const feedback = document.getElementById('feedback');
@@ -278,7 +278,7 @@
                     valueFrom(order, ['customerName', 'customer', 'name']),
                     formatCategory(valueFrom(order, ['category'])),
                     formatDate(valueFrom(order, ['date', 'orderDate', 'createdAt'], '')),
-                    money(valueFrom(order, ['value', 'total', 'totalAmount', 'amount'], 0)),
+                    money(valueFrom(order, ['value', 'orderValue', 'total', 'totalAmount', 'amount'], 0)),
                     valueFrom(order, ['status', 'orderStatus'], '-')
                 ];
                 cells.forEach((value, index) => {
