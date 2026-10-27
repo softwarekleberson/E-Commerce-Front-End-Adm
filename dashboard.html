@@ -59,8 +59,9 @@
         .panel-heading { display: flex; justify-content: space-between; align-items: start; gap: 14px; margin-bottom: 22px; }
         h2 { margin: 0; font-size: 20px; font-weight: 400; }
         .panel-subtitle { color: var(--muted); font: 12px Arial, sans-serif; margin-top: 5px; }
-        .legend { color: var(--green); font: 12px Arial, sans-serif; white-space: nowrap; }
-        .legend::before { display: inline-block; width: 9px; height: 9px; margin-right: 6px; background: var(--green); border-radius: 50%; content: ''; }
+        .legend-list { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px 14px; color: var(--muted); font: 12px Arial, sans-serif; }
+        .legend-item { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+        .legend-dot { width: 9px; height: 9px; border-radius: 50%; }
         .chart-wrap { position: relative; height: 286px; }
         .chart-wrap svg { width: 100%; height: 245px; overflow: visible; }
         .grid-line { stroke: #e8eeea; stroke-width: 1; }
@@ -134,9 +135,9 @@
 
             <div class="grid">
                 <section class="panel">
-                    <div class="panel-heading"><div><h2>Sales trends</h2><p class="panel-subtitle">Monthly sales tracking</p></div><span class="legend">Sales</span></div>
+                    <div class="panel-heading"><div><h2>Sales trends</h2><p class="panel-subtitle">Monthly sales by category</p></div><div class="legend-list" id="chart-legend" aria-label="Chart legend"></div></div>
                     <div class="chart-wrap">
-                        <svg id="sales-chart" viewBox="0 0 760 245" role="img" aria-label="Monthly sales line chart"><defs><linearGradient id="areaFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#24745a" stop-opacity=".2"/><stop offset="1" stop-color="#24745a" stop-opacity="0"/></linearGradient></defs><g id="chart-grid"></g><path id="chart-area" class="chart-area"></path><path id="chart-line" class="chart-line"></path><g id="chart-points"></g><g id="chart-labels"></g></svg>
+                        <svg id="sales-chart" viewBox="0 0 760 245" role="img" aria-label="Monthly sales by category line chart"><g id="chart-grid"></g><g id="chart-series"></g><g id="chart-labels"></g></svg>
                         <p class="empty-chart" id="empty-chart">No sales found for this period.</p>
                     </div>
                 </section>
@@ -156,12 +157,14 @@
         const number = value => Number(value || 0).toLocaleString('pt-BR');
         const categoryLabels = { livros: 'Livros', livro: 'Livros', books: 'Livros', book: 'Livros', bolsas: 'Bolsas', bolsa: 'Bolsas', bags: 'Bolsas', bag: 'Bolsas', brinquedos: 'Brinquedos', brinquedo: 'Brinquedos', toys: 'Brinquedos', toy: 'Brinquedos', papelaria: 'Papelaria', stationery: 'Papelaria' };
         const monthNames = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+        const chartColors = ['#24745a', '#d47742', '#426da8', '#9b5c8f', '#bd9a2d', '#398c91', '#c45b62', '#6e7b46'];
         const categorySelect = document.getElementById('category');
         const feedback = document.getElementById('feedback');
         const svgNamespace = 'http://www.w3.org/2000/svg';
 
         function formatCategory(value) {
             const raw = String(value || '-');
+            if (raw.includes(',')) return raw.split(',').map(category => formatCategory(category.trim())).join(', ');
             const normalized = raw.toLowerCase().replaceAll('_', ' ').trim();
             return categoryLabels[normalized] || normalized.replace(/\b\w/g, character => character.toUpperCase());
         }
@@ -197,49 +200,68 @@
         function renderChart(points) {
             const chartGrid = document.getElementById('chart-grid');
             const chartLabels = document.getElementById('chart-labels');
-            const chartPoints = document.getElementById('chart-points');
-            const chartLine = document.getElementById('chart-line');
-            const chartArea = document.getElementById('chart-area');
+            const chartSeries = document.getElementById('chart-series');
+            const chartLegend = document.getElementById('chart-legend');
             const emptyChart = document.getElementById('empty-chart');
-            [chartGrid, chartLabels, chartPoints].forEach(element => element.replaceChildren());
-            chartLine.setAttribute('d', '');
-            chartArea.setAttribute('d', '');
+            [chartGrid, chartLabels, chartSeries, chartLegend].forEach(element => element.replaceChildren());
 
-            const monthly = new Map();
-            (points || []).forEach(point => monthly.set(point.month, (monthly.get(point.month) || 0) + Number(point.total || 0)));
-            const entries = [...monthly.entries()];
-            const values = entries.map(([, total]) => total);
-            if (!entries.length || values.every(value => value === 0)) {
+            const months = [...new Set((points || []).map(point => point.month).filter(Boolean))].sort();
+            const series = new Map();
+            (points || []).forEach(point => {
+                const category = String(point.category || 'Outros');
+                if (!series.has(category)) series.set(category, new Map());
+                const values = series.get(category);
+                values.set(point.month, (values.get(point.month) || 0) + Number(point.total || 0));
+            });
+            const max = Math.max(1, ...[...series.values()].flatMap(values => months.map(month => values.get(month) || 0)));
+            if (!months.length || !series.size || max === 0) {
                 emptyChart.style.display = 'block';
                 return;
             }
             emptyChart.style.display = 'none';
 
-            const max = Math.max(...values, 1);
             const width = 700, baseY = 215, topY = 18;
-            const coordinates = values.map((value, index) => ({
-                x: 50 + index * (width / Math.max(entries.length - 1, 1)),
-                y: baseY - (value / max) * (baseY - topY)
-            }));
-            const linePath = coordinates.map(point => `${point.x},${point.y}`).join(' L ');
-            chartLine.setAttribute('d', `M ${linePath}`);
-            chartArea.setAttribute('d', `M ${coordinates[0].x} ${baseY} L ${linePath} L ${coordinates[coordinates.length - 1].x} ${baseY} Z`);
-
             [0, .25, .5, .75, 1].forEach(step => {
                 const y = baseY - step * (baseY - topY);
                 appendSvg(chartGrid, 'line', { class: 'grid-line', x1: 50, x2: 750, y1: y, y2: y });
                 appendSvg(chartGrid, 'text', { class: 'y-label', x: 0, y: y + 4 }, money(max * step));
             });
-            const labelEvery = Math.max(1, Math.ceil(entries.length / 12));
-            entries.forEach(([month], index) => {
+            const labelEvery = Math.max(1, Math.ceil(months.length / 12));
+            months.forEach((month, index) => {
                 const label = /^\d{4}-\d{2}/.test(month)
                     ? `${monthNames[Number(month.slice(5, 7)) - 1] || month} ${month.slice(0, 4)}`
                     : String(month);
-                if (index % labelEvery === 0 || index === entries.length - 1) {
-                    appendSvg(chartLabels, 'text', { class: 'x-label', x: coordinates[index].x, y: 238 }, label);
+                if (index % labelEvery === 0 || index === months.length - 1) {
+                    const x = 50 + index * (width / Math.max(months.length - 1, 1));
+                    appendSvg(chartLabels, 'text', { class: 'x-label', x, y: 238 }, label);
                 }
-                const dot = appendSvg(chartPoints, 'circle', { class: 'chart-dot', cx: coordinates[index].x, cy: coordinates[index].y, r: 4 });
-                appendSvg(dot, 'title', {}, `${label}: ${money(values[index])}`);
+            });
+            [...series.entries()].forEach(([category, values], seriesIndex) => {
+                const color = chartColors[seriesIndex % chartColors.length];
+                const coordinates = months.map((month, index) => ({
+                    x: 50 + index * (width / Math.max(months.length - 1, 1)),
+                    y: baseY - ((values.get(month) || 0) / max) * (baseY - topY),
+                    value: values.get(month) || 0,
+                    month
+                }));
+                const path = coordinates.map(point => `${point.x},${point.y}`).join(' L ');
+                appendSvg(chartSeries, 'path', { d: `M ${path}`, fill: 'none', stroke: color, 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+                coordinates.forEach(point => {
+                    const dot = appendSvg(chartSeries, 'circle', { class: 'chart-dot', cx: point.x, cy: point.y, r: 3.5, style: `stroke: ${color}` });
+                    const monthLabel = /^\d{4}-\d{2}/.test(point.month)
+                        ? `${monthNames[Number(point.month.slice(5, 7)) - 1] || point.month} ${point.month.slice(0, 4)}`
+                        : point.month;
+                    appendSvg(dot, 'title', {}, `${formatCategory(category)} · ${monthLabel}: ${money(point.value)}`);
+                });
+                const legendItem = document.createElement('span');
+                legendItem.className = 'legend-item';
+                const dot = document.createElement('span');
+                dot.className = 'legend-dot';
+                dot.style.backgroundColor = color;
+                const label = document.createElement('span');
+                label.textContent = formatCategory(category);
+                legendItem.append(dot, label);
+                chartLegend.append(legendItem);
             });
         }
 
